@@ -55,6 +55,6 @@ Load Payment QR.tcp (Loading tcp)  in Tally ;;tdl file
 12) They Scan with any UPI Payment Apps
 
 
-  For Bug Report and fixes please raise an issue.
+          For Bug Report and fixes please raise an issue.
 
 
