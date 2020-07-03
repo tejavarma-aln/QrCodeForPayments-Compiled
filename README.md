@@ -1,4 +1,4 @@
-# QrCodeForPayments-Compiled
+# QrCode For Payments-Compiled
 Generate QR Code in Sales Invoice for making payments
 
 
