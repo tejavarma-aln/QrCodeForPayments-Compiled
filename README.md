@@ -42,17 +42,17 @@ Load Payment QR.tcp (Loading tcp)  in Tally ;;tdl file
 
 6) Enter Information Based on Payment Mode (Make sure Details are valid)
 
-7) After Done with Configuration Add/Open Sales Voucher
+7) After Done with Configuration, Add/Open Sales Voucher
 
 8) There will be a Button **Generate Qr Code** Click that to button to generate Qr Code for that Invoice
 
 9) Before Going to Print Make Sure you generated Qr Code (By Clicking on Generate Qr Button)
 
-10) Go and Print an Invoice Qr Code will be displayed 
+10) Now Print the Invoice Qr Code will be displayed 
 
-11) Ask you Customer to Scan the Qr to Make the Payment
+11) Ask your Customer to Scan the Qr to Make the Payment
 
-12) They Scan with any UPI Payment Apps
+12) They Can Scan with any UPI Payment Apps
 
 
           For Bug Report and fixes please raise an issue.
