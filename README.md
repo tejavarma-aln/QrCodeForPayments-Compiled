@@ -27,10 +27,10 @@ Type regasm PaymentsQr.dll /codebase ;;Give Full path of the PaymentsQr.dll file
 
 you will get success message after it registered
 
-Load Payment QR.tcp (Loading tcp)  in Tally ;;tdl file 
+Load Payment QR.txt (Loading tdl)  in Tally ;;tdl file 
 
 **Working**
-1) After loading tcp file (Payment Qr.tcp) goto->Company Features(f11)
+1) After loading tdl file (Payment Qr.txt) goto->Company Features(f11)
 
 2) Goto->Accounting features
 
