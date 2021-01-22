@@ -1,6 +1,9 @@
 # QrCode For Payments-Compiled
 Generate QR Code in Sales Invoice for making payments
 
+**For Tally.ERP9 - PaymentsQr.tdl**
+
+**For TallyPrime - PaymentsQrPrime.tdl**
 
 
 **Requirements:**
@@ -9,7 +12,7 @@ Generate QR Code in Sales Invoice for making payments
 
 2) .Net Framework 4.x.x
 
-3) Download/Clone all the files (PaymentsQr.dl,QrCoder.dll,Payment QR.tcp)
+3) Download/Clone all the files (PaymentsQr.dl,QrCoder.dll,PaymentsQr.tdl or PaymentsQrPrime.tdl)
 
 You can Download from here : https://dotnet.microsoft.com/download/dotnet-framework/net40
 
@@ -27,10 +30,10 @@ Type regasm PaymentsQr.dll /codebase ;;Give Full path of the PaymentsQr.dll file
 
 you will get success message after it registered
 
-Load Payment QR.txt (Loading tdl)  in Tally ;;tdl file 
+For Tally.ERP9 Load PaymentsQR.tdl (Loading tdl), For TallyPrime Load PaymentsQRPrime.tdl ;;tdl file 
 
 **Working**
-1) After loading tdl file (Payment Qr.txt) goto->Company Features(f11)
+1) After loading tdl file  goto->Company Features(f11)
 
 2) Goto->Accounting features
 
