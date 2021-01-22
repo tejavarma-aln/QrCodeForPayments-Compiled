@@ -37,6 +37,8 @@ For Tally.ERP9 Load PaymentsQR.tdl (Loading tdl), For TallyPrime Load PaymentsQR
 
 2) Goto->Accounting features
 
+       For Prime goto->f11 and Set Enable Qr Code in Sales Invoice->Yes under Other features.
+
 3) Set Enable Qr Code in Sales Invoice -> Yes
 
 4) Select Payment Mode in which you want to receive amount
