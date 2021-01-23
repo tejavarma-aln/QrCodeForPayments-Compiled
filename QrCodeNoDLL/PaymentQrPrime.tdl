@@ -1,0 +1,246 @@
+
+;; Display at terms in invoice
+
+[#Part: EXPINV Terms]
+  Delete:Lines
+  Delete:Parts
+  Delete:Repeat
+  Delete:Invisible
+  ;Add:Graph Type:##SvExportLocation+"\QrCode\"+$$SanitizeString:($VoucherTypeName+$VoucherNumber)+".jpg"	
+  Add:Height:8
+  Add:Line:EXPINV Logo
+  QR Code:$$InitQrCodeGeneration
+  	
+
+;F11 Accounts info Configuration
+
+[#Part:Company F11 Other Features]
+	Local:Part:Cfg PartContent:Add:Line:At End:QRpayments
+	
+[Line:QRpayments]
+	Fields:MediumPrompt,IsQrEnabled
+	Local:Field:MediumPrompt:Set as:$$LocaleString:"Configure Qr Code for Invoices?"
+	
+
+[Field:IsQrEnabled]
+	Use:Logical Field
+	Show Table:Always
+	Set as:No
+	Sub Form:QrConfig:$$Value
+	
+[System:UDF]
+	QrIncludeAmount:Logical:7927
+	QrPaymentMode:String:7234
+	QrUpiId:String:7235
+	QrBankIfsc:String:7236
+	QrBankAccount:Number:7423
+	QrMobileNo:Number:7424
+	QrMmid:Number:7425
+	
+
+;Report for Qr Configuration
+
+
+[Report:QrConfig]
+	Title:"QrCode Configuration"
+	Form:QrConfig
+	
+[Form:QrConfig]
+	Width:50% page
+	Part:QrConfig
+	
+[Part:QrConfig]
+	Lines:QrConfigTitle,QrPaymentMode,QrIncludeAmount,QrUpiId,QrBankAccount,QrBankIfsc,QrMobileNo,QrMmid
+	Space Bottom:2
+	Space Left:2
+	Space Right:2
+	Space Top:2
+	Line:QrHelpLine
+	
+[Line:QrConfigTitle]
+	Field:Name Field
+	Local:Field:Name Field:Info:"Configure Qr Code Settings"
+	Local:Field:Name Field:Full Width:Yes
+	Local:Field:Name Field:Align:Center
+	Local:Field:Name Field:Border:thinbottom
+	
+[Line:QrPaymentMode]
+	Space Top:0.5
+	Fields:LongPrompt,QrPaymentMode
+	Local:Field:LongPrompt:Info:"Payment Mode"
+	
+[Field:QrPaymentMode]
+	Use:Name Field
+	Table:QrPaymentModes
+    Show Table:Always
+	Storage:QrPaymentMode
+	Width:50
+	Dynamic	: ""
+	
+	
+[Collection:QrPaymentModes]
+	Title:"Payment Modes"
+	List Name:"UPI ID","Bank Account & IFSC","Mobile Number & MMID"
+	
+ 
+[Line:QrIncludeAmount]
+	Field:Long Prompt,QrIncludeAmount
+	Local:Field:LongPrompt:Info:"Include Amount?"
+	Space Top:0.5
+
+[Field:QrIncludeAmount]
+	Use:Logical Field
+	Show Table:Always
+	Set as:No
+	Storage:QrIncludeAmount
+	
+[Line:QrUpiId]
+	Field:Long Prompt,QrUpiId
+	Local:Field:LongPrompt:Info:"Enter UPI Id"
+	Space Top:0.5
+	Local	: Field	: Long Prompt	: Inactive: @@NOUPID
+	Invisible	: @@NOUPID
+	
+[Field:QrUpiId]
+	Storage:QrUpiId
+	Use:Name Field
+	Width:50
+	Inactive: @@NOUPID
+	Control:QrInvalidMsg:$$IsEmpty:$$Value
+	
+[System	: Formula]
+	
+	QrPaymentMode:$QrPaymentMode:Company:##SvCurrentCompany
+	NoUPID	: $QrPaymentMode!="UPI ID"
+	NoBank	: $QrPaymentMode!="Bank Account & IFSC"
+	NoMMID	: $QrPaymentMode!="Mobile Number & MMID"
+	QrUPId :$QrUpiId:Company:##SvCurrentCompany
+	QrBankAccount :$$LocaleString:($QrBankAccount:Company:##SvCurrentCompany)
+	QrIFSCode :$QrBankIfsc:Company:##SvCurrentCompany
+	QrMobileNo :$$LocaleString:($QrMobileNo:Company:##SvCurrentCompany)
+	QrMMID : $$LocaleString:($QrMmid:Company:##SvCurrentCompany)
+	IsQrAmountInclude:$QrIncludeAmount:Company:##SvCurrentCompany
+	QrInvalidMsg:"Invalid Input!"
+	
+
+[Line:QrBankAccount]
+	Field:Long Prompt,QrBankAccount
+	Local:Field:LongPrompt:Info:"Enter Bank Account Number"
+	Space Top:0.5
+	Local	: Field	: Long Prompt	: Inactive: @@NoBank
+	Invisible	: @@NOBank
+ 
+[Field:QrBankAccount]
+	Storage:QrBankAccount
+	Use:Number Field
+	Width:50
+	Format:NoComma,NoZero
+	Inactive: @@NoBank
+	Control:QrInvalidMsg:$$IsEmpty:$$Value
+	
+
+[Line:QrBankIfsc]
+	Field:Long Prompt,QrBankIfsc
+	Local:Field:LongPrompt:Info:"Enter IFSC Code"
+	Space Top:0.5
+	Local	: Field	: Long Prompt	: Inactive: @@NoBank
+	Invisible	: @@NOBank
+	
+[Field:QrBankIfsc]
+	Storage:QrBankIfsc
+	Use:Name Field
+	Width:50
+	Inactive: @@NoBank
+	Control:QrInvalidMsg:$$IsEmpty:$$Value
+
+[Line:QrMobileNo]
+	Field:Long Prompt,QrMobileNo
+	Local:Field:LongPrompt:Info:"Enter Mobile Number"
+	Space Top:0.5
+	Local	: Field	: Long Prompt	: Inactive: @@NoMMID
+	Invisible	: @@NOMMID
+	
+	
+[Field:QrMobileNo]
+	Storage:QrMobileNo
+	Use:Number Field
+	Width:50
+	Format:NoComma,NoZero
+	Inactive: @@NOMMID
+	Control:QrInvalidMsg:$$IsEmpty:$$Value
+	
+[Line:QrMmid]
+	Field:Long Prompt,QrMmid
+	Local:Field:LongPrompt:Info:"Enter MMID"
+	Space Top:0.5
+	Local	: Field	: Long Prompt	: Inactive: @@NoMMID
+	Invisible	: @@NOMMID
+
+	
+[Field:QrMmid]
+	Storage:QrMmid
+	Use:Number Field
+	Width:50
+	Format:NoComma,NoZero
+	Inactive: @@NoMMID
+	Control:QrInvalidMsg:$$IsEmpty:$$Value
+
+	
+
+[Line:QrHelpLine]
+	Space Top:2
+	Field:SimpleField
+	Local:Field:Simple Field:Info:"**Make Sure Above Entered Information is  Valid and Working"
+	Local:Field:Simple Field:Align:Center
+	Local:Field:Simple Field:Full Width:Yes
+	Local:Field:Simple Field:Color:Red
+	
+
+
+[Function:InitQrCodeGeneration]
+	Variable:QString: String:"upi://pay?"
+	Variable:QinvNumber:String:$$StringFindAndReplace:($$String:$VoucherNumber):"_":"-"
+	Variable:QPartyName:String:($$StringFindAndReplace:$PartyLedgerName:"_":"-")
+	Variable:QCompany:String:($$StringFindAndReplace:##SvCurrentCompany:"_":"-")
+	Variable:QAmount:String:($$LocaleString:($$Number:$Amount))
+	
+    
+	10:If:@@QrPaymentMode contains "UPI ID"
+	11:Set:QString:##QString+"pa="+@@QrUPId+"&"
+	12:Set:QString:##QString+"pn="+##QCompany+"&"
+	13:Set:QString:##QString+"mc=0000&"
+	14:Set:QString:##QString+"tr="+##QinvNumber+"_"+##QPartyName+"_Pay%20to%20"+##QCompany+"&"
+	amt1:If:@@IsQrAmountInclude
+	15:Set:QString:##QString+"am="+##QAmount+"&"
+	amt2:End If
+	16:Set:QString:##QString+"mam=0&cu=INR"
+	17:Return:##QString
+	18:End If
+	19:If:@@QrPaymentMode contains "Mobile Number & MMID"
+	20:Set:QString:##QString+"pa="+@@QrMobileNo+"@"+@@QrMMID+".mobile.npci"+"&"
+	21:Set:QString:##QString+"pn="+##QCompany+"&"
+	22:Set:QString:##QString+"mc=0000&"
+	23:Set:QString:##QString+"tr="+##QinvNumber+"_"+##QPartyName+"_Pay%20to%20"+##QCompany+"&"
+	amt3:If:@@IsQrAmountInclude
+	24:Set:QString:##QString+"am="+##QAmount+"&"
+	amt4:End If
+	25:Set:QString:##QString+"mam=0&cu=INR"
+	26:Return:##QString
+	27:End If
+	28:If:@@QrPaymentMode contains "Bank Account & IFSC"
+	29:Set:QString:##QString+"pa="+@@QrBankAccount+"@"+@@QrIFSCode+".ifsc.npci"+"&"
+	30:Set:QString:##QString+"pn="+##QCompany+"&"
+	31:Set:QString:##QString+"mc=0000&"
+	32:Set:QString:##QString+"tr="+##QinvNumber+"_"+##QPartyName+"_Pay%20to%20"+##QCompany+"&"
+	amt5:If:@@IsQrAmountInclude
+	33:Set:QString:##QString+"am="+##QAmount+"&"
+	amt6:End If
+	34:Set:QString:##QString+"mam=0&cu=INR"
+	35:Return:##QString
+	36:End If
+	
+
+ 
+/*
+upi://pay?pa=8712453032@ybl&pn=payee&mc=0000&tr=123_payer&tn=123_payer_Pay%20to%20payee&am=3400&mam=0&cu=INR
+*/
