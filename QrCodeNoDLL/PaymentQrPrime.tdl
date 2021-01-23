@@ -5,8 +5,7 @@
   Delete:Lines
   Delete:Parts
   Delete:Repeat
-  Delete:Invisible
-  ;Add:Graph Type:##SvExportLocation+"\QrCode\"+$$SanitizeString:($VoucherTypeName+$VoucherNumber)+".jpg"	
+  Delete:Invisible	
   Add:Height:8
   Add:Line:EXPINV Logo
   QR Code:$$InitQrCodeGeneration
