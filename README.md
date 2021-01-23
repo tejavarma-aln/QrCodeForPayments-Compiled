@@ -5,6 +5,8 @@ Generate QR Code in Sales Invoice for making payments
 
 **For TallyPrime - PaymentsQrPrime.tdl**
 
+**For TallyPrime 1.1 - https://github.com/tejavarma-aln/QrCodeForPayments-Compiled/blob/master/QrCodeNoDLL/PaymentQrPrime.tdl (No need of dll, you can generate qr with tdl)**
+
 
 **Requirements:**
 
