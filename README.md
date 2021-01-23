@@ -1,6 +1,8 @@
 # QrCode For Payments-Compiled
 Generate QR Code in Sales Invoice for making payments
 
+**Check out source code here - https://github.com/tejavarma-aln/QrCodeForPayments-Compiled/tree/master/Binary**
+
 **For Tally.ERP9 - PaymentsQr.tdl**
 
 **For TallyPrime - PaymentsQrPrime.tdl**
