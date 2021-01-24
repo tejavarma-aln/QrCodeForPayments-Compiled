@@ -1,11 +1,12 @@
-
+ 
 ;; Display at terms in invoice
 
 [#Part: EXPINV Terms]
   Delete:Lines
   Delete:Parts
   Delete:Repeat
-  Delete:Invisible	
+  Delete:Invisible
+  ;Add:Graph Type:##SvExportLocation+"\QrCode\"+$$SanitizeString:($VoucherTypeName+$VoucherNumber)+".jpg"	
   Add:Height:8
   Add:Line:EXPINV Logo
   QR Code:$$InitQrCodeGeneration
@@ -32,9 +33,9 @@
 	QrPaymentMode:String:7234
 	QrUpiId:String:7235
 	QrBankIfsc:String:7236
-	QrBankAccount:Number:7423
-	QrMobileNo:Number:7424
-	QrMmid:Number:7425
+	QrBankAccount:String:7437
+	QrMobileNo:String:7438
+	QrMmid:String:7439
 	
 
 ;Report for Qr Configuration
@@ -131,7 +132,7 @@
  
 [Field:QrBankAccount]
 	Storage:QrBankAccount
-	Use:Number Field
+	Use:Name Field
 	Width:50
 	Format:NoComma,NoZero
 	Inactive: @@NoBank
@@ -162,7 +163,7 @@
 	
 [Field:QrMobileNo]
 	Storage:QrMobileNo
-	Use:Number Field
+	Use:Name Field
 	Width:50
 	Format:NoComma,NoZero
 	Inactive: @@NOMMID
@@ -178,7 +179,7 @@
 	
 [Field:QrMmid]
 	Storage:QrMmid
-	Use:Number Field
+	Use:Name Field
 	Width:50
 	Format:NoComma,NoZero
 	Inactive: @@NoMMID
@@ -199,8 +200,8 @@
 [Function:InitQrCodeGeneration]
 	Variable:QString: String:"upi://pay?"
 	Variable:QinvNumber:String:$$StringFindAndReplace:($$String:$VoucherNumber):"_":"-"
-	Variable:QPartyName:String:($$StringFindAndReplace:$PartyLedgerName:"_":"-")
-	Variable:QCompany:String:($$StringFindAndReplace:##SvCurrentCompany:"_":"-")
+	Variable:QPartyName:String:$$TrimRefId:($$StringFindAndReplace:$PartyLedgerName:"_":"-")
+	Variable:QCompany:String:$$TrimRefId:($$StringFindAndReplace:##SvCurrentCompany:"_":"-")
 	Variable:QAmount:String:($$LocaleString:($$Number:$Amount))
 	
     
@@ -238,7 +239,17 @@
 	35:Return:##QString
 	36:End If
 	
+[Function:TrimRefId]
+	Parameter:v1:String
+	
+01:If:$$StringLength:##v1 > 4
+02:Return:$$StringPart:##v1:0:4
+03:Else
+04:Return:##v1
+05:End If
 
+
+	
  
 /*
 upi://pay?pa=8712453032@ybl&pn=payee&mc=0000&tr=123_payer&tn=123_payer_Pay%20to%20payee&am=3400&mam=0&cu=INR
